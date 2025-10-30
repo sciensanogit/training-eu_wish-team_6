@@ -17,7 +17,16 @@ invisible(lapply(pkgs, FUN = library, character.only = TRUE))
 
 # Mission 1.1 ----
 ## Source member 1 script ----
-source("mission1-member1.R")
+source("mission1-JK.R")
 
 ## Source member 2 script ----
-source("mission1-member2.R")
+source("mission1-PL.R")
+
+## Source member 3 script ----
+source("mission1-purkrtos.R")
+
+## Source member 4 script ----
+source("mission1-CO.R")
+
+## Source member 5 script ----
+#source("mission1-member1.R") #placeholder for Martine's file
