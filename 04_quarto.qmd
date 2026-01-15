@@ -23,7 +23,9 @@ execute:
 
 ```{r}
 #| label: load packages and data
-load(".RData")
+load("PL.RData")
+
+
 
 library(flextable)
 library(dplyr)

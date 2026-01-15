@@ -8,23 +8,33 @@
 
 # Load packages ----
 # select packages
-pkgs <- c("dplyr", "ggplot2", "flextable", "quarto")
+pkgs <- c("dplyr", "ggplot2", "flextable", "quarto","lubridate")
 # install packages
 install.packages(setdiff(pkgs, rownames(installed.packages())))
 invisible(lapply(pkgs, FUN = library, character.only = TRUE))
 
 # load data
-df_nation <- read.table(file = "./data_example/Belgium_export-nation.csv", sep = ";", dec = ".", header = T)
+df_nation <- read.table(file = "Belgium_export-nation.csv", sep = ";", dec = ".", header = T)
+
+# Keep only Mondays and arrange by date
+df_last10 <- df_nation %>%
+  mutate(date = as.Date(date)) %>%
+  filter(lubridate::wday(date, week_start = 1) == 1) %>%   # Monday = 1 when week_start = 1
+  arrange(desc(date)) %>%
+  slice_head(n = 10) |> 
+  rename( Site = siteName, Date = date, `Value PMMV` = value_pmmv)
+
+
 
 # Save table ----
-tbl_nation <- df_nation %>%
-  select(siteName, date, value_pmmv) %>%
-  arrange(desc(date)) %>% 
+tbl_nation <- df_last10 %>%
+  select(Site, Date, 'Value PMMV') %>%
+  arrange(desc(Date)) %>% 
   slice_head(n = 10) %>%
   flextable() %>%
   fontsize(part = "body",size = 10) %>%
   fontsize(part = "header",size = 10) %>%
-  autofit() %>% theme_vanilla()
+  autofit() %>% theme_alafoli()
 
 tbl_nation
 
